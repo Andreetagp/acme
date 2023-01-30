@@ -22,7 +22,6 @@ def generate_order_prices ():
                 order_result = {}
                 order_result['id'] = order['id']
                 order_result['total'] = qu.total_price_orders(order['products'], products_by_id)
-                #print(order_result)
                 writer.writerow(order_result)
 
 
@@ -79,7 +78,21 @@ def generate_customer_ranking ():
             sorted_customer_ranking = sorted(customer_ranking.values(), key=lambda c: c['total'], reverse=True)
             for customer in sorted_customer_ranking:
                 writer.writerow(customer)
-    
 
 
-generate_product_customers()                    
+def select_query (query_number):
+    queries = {
+        1: generate_order_prices,
+        2: generate_product_customers,
+        3: generate_customer_ranking
+    }
+    query = queries.get(query_number)
+    if query:
+        query()
+    else:
+        print("Invalid query number")
+
+if __name__ == '__main__':
+    print()
+    query_number = int(input("Número de consulta a realizar: "))
+    select_query(query_number)

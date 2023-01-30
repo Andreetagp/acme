@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generación documentos</title>
+  <meta charset="utf-8">
+  <style>
+  body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+  h3 {
+      color: green;
+  }
+  .row1, .row2{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    text-align: center;
+      
+  }
+  .column {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+  }
+  .column1, .column2, .column3 {
+    flex: 1;
+    border: solid 1px blue;
+    text-align: center;
+    padding: 20px;
+  }
+
+  button {
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  button:hover {
+    background-color: blue;
+    color: red;
+    cursor: pointer;
+  }
+  </style>
+
+  <script>
+  function get_order_prices() {
+    httpGetAsync("get_order_prices", downloadFile, "results/order_prices.csv", "order_prices.csv")
+
+  }
+
+  function get_product_customers(){
+    httpGetAsync("get_product_customers", downloadFile, "results/product_customers.csv", "product_customers.csv")
+  }
+
+  function get_customers_ranking(){
+    httpGetAsync("get_customer_ranking", downloadFile, "results/customer_ranking.csv", "custumer_ranking.csv")
+  }
+
+  function httpGetAsync(theUrl, callback, path_to_file, file_name)
+  {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() { 
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+              callback(path_to_file, file_name);
+          console.log(xmlHttp.status)
+      }
+      xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+      xmlHttp.send(null);
+  }
+
+  function downloadFile(url, fileName){
+      fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+        .then(res => res.blob())
+        .then(res => {
+          const aElement = document.createElement('a');
+          aElement.setAttribute('download', fileName);
+          const href = URL.createObjectURL(res);
+          aElement.href = href;
+          aElement.setAttribute('target', '_blank');
+          aElement.click();
+          URL.revokeObjectURL(href);
+        });
+    };
+  </script>
+</head>
+<body>
+  
+  <div class="container">
+
+    <div class="row1">
+      <div class="column">
+        <h1>Papas ACME S.A</h1>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="column1">
+        <h3>Reporte 1</h3>
+        <p>Aquí se puede generar el archivo: order_prices.csv</p>
+        <button class="generate" type="button" onclick="get_order_prices()">Generar</button>
+      </div>
+
+      <div class="column2">
+        <h3>Reporte 2</h3>
+        <p>Aquí se puede generar el archivo: product_customers.csv</p>
+        <button class="generate" type="button" onclick="get_product_customers()">Generar</button>
+      </div>
+
+      <div class="column3">
+        <h3>Reporte 3</h3>
+        <p>Aquí se puede generar el archivo: customer_ranking.csv</p>
+        <button class="generate" type="button" onclick="get_customers_ranking()">Generar</button>
+      </div>
+
+    </div>
+
+    <div class="row1">
+      <div class="column">
+        <footer>Andrea Gascó Pau</footer>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>

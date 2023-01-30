@@ -1,0 +1,83 @@
+<button id="downloadButton1">Download File 1</button>
+<button id="downloadButton2">Download File 2</button>
+<button id="downloadButton3">Download File 3</button>
+
+js
+
+document.getElementById("downloadButton1").onclick = function(){
+    fetch('/download_file?file=1')
+    .then(response => {
+        response.blob().then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'file1.txt';
+            a.click();
+        })
+    })
+}
+document.getElementById("downloadButton2").onclick = function(){
+    fetch('/download_file?file=2')
+    .then(response => {
+        response.blob().then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'file2.txt';
+            a.click();
+        })
+    })
+}
+document.getElementById("downloadButton3").onclick = function(){
+    fetch('/download_file?file=3')
+    .then(response => {
+        response.blob().then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'file3.txt';
+            a.click();
+        })
+    })
+}
+
+python
+
+class MyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path.startswith('/download_file'):
+            params = parse_qs(urlsplit(self.path).query)
+            file_id = int(params['file'][0])
+            if file_id == 1:
+                my_python_function_1()
+                filename = 'file1.txt'
+            elif file_id == 2:
+                my_python_function_2()
+                filename = 'file2.txt'
+            elif file_id == 3:
+                my_python_function_3()
+                filename = 'file3.txt'
+            else:
+                self.send_response(404)
+                self.end_headers()
+
+
+
+                h3 {
+                    color: green;
+                }
+                .row1, .row2{
+                    display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    border: solid 1px blue;
+                    text-align: center;
+                  }
+                  .column1, .column2, .column3 {
+                    flex: 1;
+                    border: solid 1px blue;
+                    text-align: center;
+                  }
+                .button{
+                  padding-bottom: 50px;
+                }

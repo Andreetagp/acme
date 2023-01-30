@@ -12,4 +12,3 @@ def total_price_orders(order_string, products_by_id):
         dict_of_product = products_by_id[product_id]
         total_price += float(dict_of_product['cost'])
     return total_price
-
