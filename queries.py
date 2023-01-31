@@ -1,4 +1,5 @@
 import csv
+import sys
 import query_utils as qu
 
 customers_csv_path = 'csv/customers.csv'
@@ -79,20 +80,29 @@ def generate_customer_ranking ():
             for customer in sorted_customer_ranking:
                 writer.writerow(customer)
 
+def exit ():
+    sys.exit()
 
 def select_query (query_number):
     queries = {
         1: generate_order_prices,
         2: generate_product_customers,
-        3: generate_customer_ranking
+        3: generate_customer_ranking,
+        4: exit
     }
     query = queries.get(query_number)
     if query:
         query()
+        print("Consulta realizada con éxito")
     else:
-        print("Invalid query number")
+        print("Número introducido inválido. Tiene que estar en el rango [1-4]")
 
 if __name__ == '__main__':
-    print()
+    print("""Aquí puedes realizar las 3 consultas solicitadas.
+Se generará el archivo correspondiente en la carpeta results.
+    Pulsa 1 para generar el archivo order_prices.csv
+    Pulsa 2 para generar el archivo product_customers.csv
+    Pulsa 3 para generar el archivo customer_ranking.csv
+    Pulsa 4 para salir del menú""")
     query_number = int(input("Número de consulta a realizar: "))
     select_query(query_number)

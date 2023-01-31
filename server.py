@@ -4,7 +4,7 @@ import queries as q
 
 PORT = 8080
 
-class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
+class HttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if '.csv' not in self.path:
             self.path = 'frontend/index.html'
@@ -17,7 +17,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 
-Handler = MyHttpRequestHandler
+Handler = HttpRequestHandler
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     print("serving at port", PORT)
     httpd.serve_forever()

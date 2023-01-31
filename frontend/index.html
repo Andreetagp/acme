@@ -7,7 +7,6 @@
   body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
-
   h3 {
       color: green;
   }
@@ -15,8 +14,7 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    text-align: center;
-      
+    text-align: center;   
   }
   .column {
     flex: 1;
@@ -29,12 +27,10 @@
     text-align: center;
     padding: 20px;
   }
-
   button {
     padding: 10px;
     border-radius: 10px;
   }
-
   button:hover {
     background-color: blue;
     color: red;
@@ -45,7 +41,6 @@
   <script>
   function get_order_prices() {
     httpGetAsync("get_order_prices", downloadFile, "results/order_prices.csv", "order_prices.csv")
-
   }
 
   function get_product_customers(){
@@ -56,35 +51,35 @@
     httpGetAsync("get_customer_ranking", downloadFile, "results/customer_ranking.csv", "custumer_ranking.csv")
   }
 
-  function httpGetAsync(theUrl, callback, path_to_file, file_name)
-  {
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() { 
-          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-              callback(path_to_file, file_name);
-          console.log(xmlHttp.status)
+  async function httpGetAsync(theUrl, callback, path_to_file, file_name) {
+    try {
+      const response = await fetch(theUrl);
+      if (response.ok) {
+        callback(path_to_file, file_name);
+      } else {
+        console.error(`Error ${response.status}: ${response.statusText}`);
       }
-      xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-      xmlHttp.send(null);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  function downloadFile(url, fileName){
-      fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
-        .then(res => res.blob())
-        .then(res => {
-          const aElement = document.createElement('a');
-          aElement.setAttribute('download', fileName);
-          const href = URL.createObjectURL(res);
-          aElement.href = href;
-          aElement.setAttribute('target', '_blank');
-          aElement.click();
-          URL.revokeObjectURL(href);
-        });
-    };
+  function downloadFile(url, fileName) {
+    fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+      .then(response => response.blob())
+      .then(fileBlob => {
+        const downloadElement = document.createElement('a');
+        downloadElement.setAttribute('download', fileName);
+        const href = URL.createObjectURL(fileBlob);
+        downloadElement.href = href;
+        downloadElement.setAttribute('target', '_blank');
+        downloadElement.click();
+        URL.revokeObjectURL(href);
+      });
+  };
   </script>
 </head>
-<body>
-  
+<body> 
   <div class="container">
 
     <div class="row1">
