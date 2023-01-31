@@ -3,7 +3,7 @@
   - [Proyecto](#proyecto)
     - queries.py
     - query_utils.py   
-  - [Ampliaciones] (#ampliaciones)
+  - [Ampliaciones](#ampliaciones)
     - test_queries.py
     - frontend
 - [Documentación](#documentación)
