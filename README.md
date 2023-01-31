@@ -62,7 +62,7 @@ Este método sirve para convertir una lista de diccionarios en un diccionario de
 
 Este método sirve para cálcular el total de un pedido, recibiendo como argumentos un string con el pedido, y un diccionario de los productos que forman ese pedido. Se ha realizado debido a que este dato se necesita en dos de las consultas.
 
-## Proyecto
+## Ampliaciones
 
 ### test_queries.py
 
