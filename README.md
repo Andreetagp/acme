@@ -28,7 +28,7 @@ El esquema de carpetas y los archivos realizados es el siguiente:
     - order_prices.csv
     - product_customers.csv
   - frontend
-    - index-html
+    - index_html
   - queries.py
   - query_utils.py
   - test_queries.py
